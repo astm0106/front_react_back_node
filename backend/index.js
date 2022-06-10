@@ -1,12 +1,17 @@
 const express = require('express')
 const app = express()
 const path = require('path');
+const db = require('./testdb.js');
 const port = process.env.PORT || 3001;
 
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 app.get("/api", (req, res) => {
-  res.json({ message: "Hello World!" });
+  let text = db.testdb();
+  text.then( e=> { 
+  res.json({ message: e });
+  }
+  )
 });
 
 app.get('*', (req, res) => {
